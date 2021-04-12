@@ -6,8 +6,8 @@ public class Main {
 
         MyMatcher myMatcher = new MyMatcher();
 
-        System.out.println(myMatcher.matches("text", "[o-}*"));
-        System.out.println(myMatcher.matches("text", "^t.*"));
+//        System.out.println(myMatcher.matches("text", "[o-}*"));
+//        System.out.println(myMatcher.matches("text", "^t.*"));
 
         String st120 = "accccccbbaaccbbbbaacbaccbacbbbaacbbbbacbaccbbabaaaaccccbbaccccccccccbcbaaacccccbaaaccbacbaaacbcbaccccbabacccbcbbbaccbbcc";
         String st3000 = "acccbbbcccbaabaaabacbaabaacccccccbaabbacbbbbaaccbbaaacccccbbbabacbaaaababbaccccccbcbbbbaaccccccbaaacbacbbbbaccbcbbbbcccbcbbbbaccbbbacccbbbaaaccccbaccbbbaccbbaccbcbabbbabb" +
@@ -67,9 +67,13 @@ public class Main {
                 "cbcbbbbabaaccbaaccccbaacccbccbbbbbaaccbaccccbaccccbbabbaccccbbacbbcbbaaabbacbbaabbaccbababaabbbaacbabacbcccbccccccbbbbbabaccccccbaaabaaccbacccbacccbbbbbbacbaaaaaccccccbaa" +
                 "cccccbacccbaaaaccbbbbabaccbbacccb";
 
-        System.out.println(myMatcher.matches(str7000, "((a|b)*ac+((b|c)*|b))+"));
-        System.out.println(myMatcher.matches("x".repeat(200000000) + 'y', "(x+x+)+y",50));
-        System.out.println(myMatcher.matches("0000000000000000000000000000000000000000000000000000000000", "((0*)*)*1"));
+//        System.out.println(myMatcher.matches(st3000, "((a|b)*ac+((b|c)*|b))+"));
+//        for (int i = 20000000; i < 2000000000; i=i+1000000) {
+//            System.out.println(i);
+//            System.out.println(myMatcher.matches("x".repeat(i) + 'y', "(x+x+)+y", 50));
+//        }
+        for (int i = 0; i < 30; i++)
+            System.out.println(i+String.valueOf(myMatcher.matches("0".repeat(i), "((((0*)*)*)*)*1")));
 
 
     }

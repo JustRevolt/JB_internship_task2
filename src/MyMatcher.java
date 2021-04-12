@@ -31,10 +31,9 @@ public class MyMatcher {
                 state = MatcherState.RUNNING;
                 Matcher matcher = Pattern.compile(regex).matcher(text);
 
-                if (!Thread.currentThread().isInterrupted()) {
-
+                if (!Thread.currentThread().isInterrupted())
                     state = matcher.matches() ? MatcherState.END_TRUE : MatcherState.END_FALSE;
-                }
+
             } catch (PatternSyntaxException err) {
                 System.out.printf("Regex is invalid: %s\n", err.getMessage());
                 state = MatcherState.END_FALSE;
