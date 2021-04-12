@@ -4,6 +4,8 @@ import java.util.regex.PatternSyntaxException;
 
 public class MyMatcher {
 
+    private static final long DEFAULT_TIMEOUT = 1000;
+
     private enum MatcherState {
         END_TRUE, END_FALSE, INDEFINITE, RUNNING
     }
@@ -30,22 +32,18 @@ public class MyMatcher {
                 Matcher matcher = Pattern.compile(regex).matcher(text);
 
                 if (!Thread.currentThread().isInterrupted()) {
-                    if (matcher.matches()) {
-                        state = MatcherState.END_TRUE;
-                    } else {
-                        state = MatcherState.END_FALSE;
-                    }
+
+                    state = matcher.matches() ? MatcherState.END_TRUE : MatcherState.END_FALSE;
                 }
             } catch (PatternSyntaxException err) {
                 System.out.printf("Regex is invalid: %s\n", err.getMessage());
                 state = MatcherState.END_FALSE;
-            } catch (StackOverflowError err) {
+            } catch (Error err) {
                 System.out.printf("Error: %s\n", err.getClass());
                 state = MatcherState.END_FALSE;
             }
         }
     }
-
 
     public boolean matches(String text, String regex, long timeout) {
         MatchRunnable runnable = new MatchRunnable(text, regex);
@@ -63,6 +61,7 @@ public class MyMatcher {
                 return true;
             case RUNNING:
                 System.out.println("Error: matches() running for a long time.");
+                return false;
             case END_FALSE:
             default:
                 return false;
@@ -70,6 +69,6 @@ public class MyMatcher {
     }
 
     public boolean matches(String text, String regex) {
-        return matches(text, regex, 1000);
+        return matches(text, regex, DEFAULT_TIMEOUT);
     }
 }
